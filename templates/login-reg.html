@@ -1,0 +1,48 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="">
+  <meta name="author" content="Mark Otto, Jacob Thornton, and Bootstrap contributors">
+  <meta name="generator" content="Jekyll v3.8.5">
+  <title>{{ loginOrReg }} for BookReviews.com</title>
+
+  <!-- Bootstrap core CSS -->
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS"
+    crossorigin="anonymous">
+
+
+  <style>
+    .bd-placeholder-img {
+        font-size: 1.125rem;
+        text-anchor: middle;
+      }
+
+      @media (min-width: 768px) {
+        .bd-placeholder-img-lg {
+          font-size: 3.5rem;
+        }
+      }
+    </style>
+  <!-- Custom styles for this template -->
+  <link rel="stylesheet" href="{{ url_for('static',filename='styles/login-reg.css') }}?version=1">
+</head>
+
+<body class="text-center">
+    {% if loginOrReg == "Log In" %}
+  <form class="form-signin" action="{{ url_for('process_login') }}" method="POST">
+    {% else %}
+  <form class="form-signin" action="{{ url_for('process_registration') }}" method="POST">
+    {% endif %}
+    <h1 class="h3 mb-3 font-weight-normal">Please {{ loginOrReg }}</h1>
+    <label class="sr-only">Email address</label>
+    <input name="username" type="email" id="inputEmail" class="form-control" placeholder="Email address" required autofocus>
+    <label class="sr-only">Password</label>
+    <input name="password" type="password" id="inputPassword" class="form-control" placeholder="Password" required>
+    <button class="btn btn-lg btn-primary btn-block">{{ loginOrReg }}</button>
+  </form>
+</body>
+
+</html>
