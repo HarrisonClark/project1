@@ -1,0 +1,58 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="">
+  <meta name="author" content="Mark Otto, Jacob Thornton, and Bootstrap contributors">
+  <meta name="generator" content="Jekyll v3.8.5">
+  <title>{{ loginOrReg }} for BookReviews.com</title>
+
+  <!-- Bootstrap core CSS -->
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS"
+    crossorigin="anonymous">
+
+  <!-- Custom styles for this template -->
+  <link rel="stylesheet" href="{{ url_for('static',filename='styles/search.css') }}?version=8">
+</head>
+
+<body class="text-center">
+      <h1>Search for a Book</h1>
+  <div class="replacement-body">
+  <!-- Form for ISBN Searches -->
+  <form class="form-signin" action="{{ url_for('search_isbn') }}" method="POST">
+      <h1 class="h3 mb-3 font-weight-normal">Search by ISBN</h1>
+      <label class="sr-only">ISBN</label>
+      <input name="isbn" type="text" id="inputText" class="form-control" placeholder="############" required autofocus>
+      <button class="btn btn-lg btn-primary btn-block margined">Search</button>
+  </form>
+  <!-- Form for Title Searches -->
+  <form class="form-signin" action="{{ url_for('search_title') }}" method="POST">
+      <h1 class="h3 mb-3 font-weight-normal">Search by Title</h1>
+      <label class="sr-only">Title</label>
+      <input name="title" type="text" id="inputText" class="form-control" placeholder="Title" required>
+      <button class="btn btn-lg btn-primary btn-block margined">Search</button>
+  </form>
+  <!-- Form for Author Searches -->
+  <form class="form-signin" action="{{ url_for('search_title') }}" method="POST">
+      <h1 class="h3 mb-3 font-weight-normal">Search by Author</h1>
+      <label class="sr-only">Author</label>
+      <input name="author" type="text" id="inputText" class="form-control" placeholder="Author" required>
+      <button class="btn btn-lg btn-primary btn-block margined">Search</button>
+  </form>
+  </div>
+  <footer class="text-center">
+    <div class="replacement-body">
+        <div class="extrawide">
+            <a href="{{ url_for('login') }}">Login</a>
+        </div>
+        <div class="extrawide">
+            <a href="{{ url_for('register') }}">Register</a>
+        </div>
+    </div>
+
+  </footer>
+</body>
+
+</html>

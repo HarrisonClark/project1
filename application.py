@@ -34,12 +34,12 @@ def process_login():
     """Log into the Webpage"""
 
     # Get form information.
-    username = request.form.get("username")
+    email = request.form.get("email")
     password = request.form.get("password")
 
     # Make sure flight exists.
-    if db.execute("SELECT userId FROM users WHERE username = :us AND password = :ps", {"us": username, "ps": password}).rowcount == 0:
-        return "Incorrect Username or Password."
+    if db.execute("SELECT id FROM users WHERE email = :em AND password = :ps", {"em": email, "ps": password}).rowcount == 0:
+        return "Incorrect Email or Password."
     else:
         return redirect("/database")
 
@@ -52,10 +52,10 @@ def process_registration():
     """Registers new account with Webpage"""
 
     # Get form information.
-    usern = request.form.get("username")
-    passw = request.form.get("password")
+    email = request.form.get("email")
+    password = request.form.get("password")
     # Make sure flight exists.
-    db.execute("INSERT INTO users (username, password) VALUES (:username, :password)", {"username": usern, "password": passw})
+    db.execute("INSERT INTO users (email, password) VALUES (:email, :password)", {"email": email, "password": password})
     db.commit()
     return redirect("/database")
 
@@ -70,3 +70,57 @@ def database():
 @app.route("/user/<string:user_name>")
 def user(user_name):
     return render_template("user-page.html", username=user_name)
+
+@app.route("/search")
+def serach():
+    return render_template("search.html")
+
+@app.route("/search-isbn", methods=["POST"])
+def search_isbn():
+    """Searches through book database using isbn"""
+    # Get form information.
+    isbn = request.form.get("isbn")
+    # Make sure flight exists.
+    results = db.execute("SELECT title, author FROM books WHERE isbn = :isbn", {"isbn": isbn}).fetchall()
+    if results is None:
+        return "<h3>There were no matching books</h1>"
+    text = "<br>"
+    for result in results:
+        text += result.title + " by " + result.author + "<br>"
+    return text
+
+@app.route("/search-title", methods=["POST"])
+def search_title():
+    """Searches through book database using title"""
+    # Get form information.
+    title = request.form.get("title")
+    # Make sure flight exists.
+    results = db.execute("SELECT title, author FROM books WHERE title = :title", {"title": title}).fetchall()
+    if results is None:
+        return "<h3>There were no matching books</h1>"
+    text = "<br>"
+    for result in results:
+        text += result.title + " by " + result.author + "<br>"
+    return text
+
+@app.route("/search-author", methods=["POST"])
+def search_author():
+    """Searches through book database using author"""
+    # Get form information.
+    author = request.form.get("author")
+    # Make sure flight exists.
+    results = db.execute("SELECT title, author FROM books WHERE author = :author", {"author": author}).fetchall()
+    if results is None:
+        return "<h3>There were no matching books</h1>"
+    text = "<br>"
+    for result in results:
+        text += result.title + " by " + result.author + "<br>"
+    return text
+
+@app.route("/isbn/<string:isbn>")
+def book_isbn(isbn):
+    book = db.execute("SELECT title, author FROM books WHERE isbn = :isbn", {"isbn": isbn}).fetchone()
+    if book is None:
+        return "ERROR! Book doesn't exisit"
+    text = "<br>" + isbn + " is " + book.title + " by " + book.author + ".<br>"
+    return text
