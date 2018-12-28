@@ -54,9 +54,6 @@ def process_registration():
     # Get form information.
     usern = request.form.get("username")
     passw = request.form.get("password")
-    print('----------------------------------------------------------')
-    print(usern, passw)
-    print('----------------------------------------------------------')
     # Make sure flight exists.
     db.execute("INSERT INTO users (username, password) VALUES (:username, :password)", {"username": usern, "password": passw})
     db.commit()
